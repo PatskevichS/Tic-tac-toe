@@ -1,6 +1,5 @@
 package gmail.luronbel.tictactoe.configuration;
 
-
 import javafx.stage.Stage;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
