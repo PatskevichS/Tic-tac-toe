@@ -41,23 +41,19 @@ public class Grid extends Group {
 
     private void createVerticalLine(final int x, final int y, final int size) {
         final double arc = (lineWidth / 4) * 3;
-        final Rectangle rectangle = new Rectangle(lineWidth, size);
+        final Rectangle rectangle = new Rectangle(x, y, lineWidth, size);
         rectangle.setFill(Color.WHITE);
         rectangle.setArcHeight(arc);
         rectangle.setArcWidth(arc);
-        rectangle.setX(x);
-        rectangle.setY(y);
         getChildren().add(rectangle);
     }
 
     private void createHorizontalLine(final int x, final int y, final int size) {
         final double arc = (lineWidth / 4) * 3;
-        final Rectangle rectangle = new Rectangle(size, lineWidth);
+        final Rectangle rectangle = new Rectangle(x, y, size, lineWidth);
         rectangle.setFill(Color.WHITE);
         rectangle.setArcHeight(arc);
         rectangle.setArcWidth(arc);
-        rectangle.setX(x);
-        rectangle.setY(y);
         getChildren().add(rectangle);
     }
 }

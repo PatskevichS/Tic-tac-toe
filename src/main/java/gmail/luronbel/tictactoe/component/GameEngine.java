@@ -25,5 +25,10 @@ public class GameEngine {
         viewManager.showCross(2, 2);
         viewManager.showCross(3, 1);
         viewManager.showCross(3, 3);
+
+        viewManager.showCircle(1, 2);
+        viewManager.showCircle(2, 1);
+        viewManager.showCircle(2, 3);
+        viewManager.showCircle(3, 2);
     }
 }
