@@ -31,6 +31,9 @@ public class ViewManager {
     @Value("${border_size}")
     private int borderSize;
 
+    @Value("${header_size}")
+    private int headerSize;
+
     @Value("${margin}")
     private int margin;
 
@@ -93,7 +96,7 @@ public class ViewManager {
         final Rectangle second = cross.getSecond();
 
         final int _x = borderSize + margin + (x - 1) * cellSize + (x - 1) * lineWidth;
-        final int _y = borderSize + margin + (y - 1) * cellSize + (y - 1) * lineWidth + (cellSize / 7) * 3;
+        final int _y = borderSize + margin + (y - 1) * cellSize + (y - 1) * lineWidth + (cellSize / 7) * 3 + headerSize;
 
         first.setX(_x);
         first.setY(_y);
@@ -120,7 +123,7 @@ public class ViewManager {
         final javafx.scene.shape.Circle circle = circleView.getCircle();
 
         final int _x = borderSize + (x - 1) * cellSize + (x - 1) * lineWidth + cellSize / 2;
-        final int _y = borderSize + (y - 1) * cellSize + (y - 1) * lineWidth + cellSize / 2;
+        final int _y = borderSize + (y - 1) * cellSize + (y - 1) * lineWidth + cellSize / 2 + headerSize;
 
         circle.setCenterX(_x);
         circle.setCenterY(_y);

@@ -3,6 +3,9 @@ package gmail.luronbel.tictactoe.layout;
 import static gmail.luronbel.tictactoe.component.Grid.GRID_BEAN;
 import static gmail.luronbel.tictactoe.layout.Background.BACKGROUND_BEAN;
 import static gmail.luronbel.tictactoe.layout.GameElementsGroup.GAME_ELEMENTS_BEAN;
+import static gmail.luronbel.tictactoe.layout.Header.HEADER_BEAN;
+import static gmail.luronbel.tictactoe.layout.Indication.INDICATION_BEAN;
+import static gmail.luronbel.tictactoe.layout.Menu.MENU_BEAN;
 
 import gmail.luronbel.tictactoe.component.Grid;
 import javafx.scene.effect.GaussianBlur;
@@ -27,18 +30,26 @@ public class GameFieldLayout extends Pane {
     public GameFieldLayout(@Qualifier(BACKGROUND_BEAN) final Background background,
                            @Qualifier(GAME_ELEMENTS_BEAN) final GameElementsGroup gameElementsGroup,
                            @Qualifier(GRID_BEAN) final Grid grid,
-                           @Value("${window_height}") final int windowHeight, @Value("${window_width}") final int windowWidth) {
-        modalView = new Rectangle(windowWidth, windowHeight);
+                           @Qualifier(INDICATION_BEAN) final Indication indication,
+                           @Qualifier(MENU_BEAN) final Menu menu,
+                           @Qualifier(HEADER_BEAN) final Header header,
+                           @Value("${window_height}") final int windowHeight,
+                           @Value("${window_width}") final int windowWidth,
+                           @Value("${header_size}") final int headerSize) {
+        modalView = new Rectangle(windowWidth, windowHeight + headerSize);
         modalView.setOpacity(0.7);
         modalView.setVisible(false);
 
         interactiveViews = new Pane();
         interactiveViews.getChildren().add(grid);
+        interactiveViews.getChildren().add(indication);
+        interactiveViews.getChildren().add(header);
         interactiveViews.getChildren().add(gameElementsGroup);
 
         getChildren().add(background);
         getChildren().add(interactiveViews);
         getChildren().add(modalView);
+        getChildren().add(menu);
     }
 
     public void showModalView() {

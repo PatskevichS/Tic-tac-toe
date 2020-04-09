@@ -13,7 +13,8 @@ public class Grid extends Group {
 
     private final int lineWidth = 10;
 
-    public Grid(@Value("${cell_size}") final int cellSize, @Value("${border_size}") final int borderSize) {
+    public Grid(@Value("${cell_size}") final int cellSize, @Value("${border_size}") final int borderSize,
+                @Value("${header_size}") final int headerSize) {
         super();
 
         final Line l1 = new Line();
@@ -32,11 +33,11 @@ public class Grid extends Group {
 
         final int size = cellSize * 3 + lineWidth * 2;
 //        Vertical
-        createVerticalLine(borderSize + cellSize, borderSize, size);
-        createVerticalLine(borderSize + 2 * cellSize + lineWidth, borderSize, size);
+        createVerticalLine(borderSize + cellSize, borderSize + headerSize, size);
+        createVerticalLine(borderSize + 2 * cellSize + lineWidth, borderSize + headerSize, size);
 //        Horizontal
-        createHorizontalLine(borderSize, borderSize + cellSize, size);
-        createHorizontalLine(borderSize, borderSize + 2 * cellSize + lineWidth, size);
+        createHorizontalLine(borderSize, borderSize + cellSize + headerSize, size);
+        createHorizontalLine(borderSize, borderSize + 2 * cellSize + lineWidth + headerSize, size);
     }
 
     private void createVerticalLine(final int x, final int y, final int size) {
