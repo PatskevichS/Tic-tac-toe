@@ -8,9 +8,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class TicTacToeApplication extends Application {
+public class TicTacToeApp extends Application {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch(args);
     }
 

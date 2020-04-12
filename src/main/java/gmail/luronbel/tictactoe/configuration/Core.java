@@ -10,6 +10,7 @@ import gmail.luronbel.tictactoe.component.Game;
 import gmail.luronbel.tictactoe.layout.GameFieldLayout;
 import gmail.luronbel.tictactoe.layout.Menu;
 import gmail.luronbel.tictactoe.player.ActivePlayer;
+import gmail.luronbel.tictactoe.player.Bot;
 import gmail.luronbel.tictactoe.utils.PositionResolver;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -63,6 +64,8 @@ public class Core {
     private double xOffset = 0;
     private double yOffset = 0;
 
+    private boolean isDragged = false;
+
     public void start(@NonNull final Stage primaryStage) {
         final Scene mainScene = new Scene(gameFieldLayout, windowWidth, windowHeight + headerSize);
         primaryStage.setTitle(appName + " " + appVersion);
@@ -100,6 +103,9 @@ public class Core {
             }
         });
         gameFieldLayout.setOnMouseDragged(event -> {
+            if (!isDragged) {
+                return;
+            }
             if (!gameFieldLayout.isModalViewShown()) {
                 gameFieldLayout.showModalView();
             }
@@ -107,6 +113,15 @@ public class Core {
             primaryStage.setY(event.getScreenY() - yOffset);
         });
 
+        menu.setPlayerVsBotButtonAction(event ->
+        {
+            menu.hide();
+            gameFieldLayout.hideModalView();
+            game.reset();
+            game.setBluePlayer(new Bot());
+            game.setRedPlayer(new ActivePlayer());
+            game.start();
+        });
         menu.setPlayerVsPlayerButtonAction(event ->
         {
             menu.hide();
@@ -131,7 +146,10 @@ public class Core {
             final int y = positionResolver.resolveY(yOffset);
             if (y != 0) {
                 game.clickOnCell(y, x);
+                isDragged = false;
+                return;
             }
         }
+        isDragged = true;
     }
 }
