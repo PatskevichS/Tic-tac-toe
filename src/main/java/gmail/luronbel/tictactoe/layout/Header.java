@@ -36,6 +36,8 @@ public class Header extends Group {
     private final Button refreshButton;
     private final Text redText = new Text("0");
     private final Text blueText = new Text("0");
+    private final Rectangle redMask;
+    private final Rectangle blueMask;
 
     private int redScore = 0;
     private int blueScore = 0;
@@ -80,6 +82,11 @@ public class Header extends Group {
             blueText.setText("" + blueScore);
         });
 
+        redMask = new Rectangle(BUTTON_WIDTH - 20, BUTTON_HEIGHT, Color.RED);
+        blueMask = new Rectangle(BUTTON_WIDTH - 20, BUTTON_HEIGHT, Color.BLUE);
+        redMask.setVisible(false);
+        blueMask.setVisible(false);
+
         final Rectangle redScoreRec = new Rectangle(BUTTON_WIDTH - 20, BUTTON_HEIGHT, Color.WHITE);
         final Rectangle blueScoreRec = new Rectangle(BUTTON_WIDTH - 20, BUTTON_HEIGHT, Color.WHITE);
         redScoreRec.setEffect(innerShadow);
@@ -88,8 +95,8 @@ public class Header extends Group {
         redText.setFont(font);
         blueText.setFont(font);
 
-        final StackPane redStack = new StackPane(redScoreRec, redText);
-        final StackPane blueStack = new StackPane(blueScoreRec, blueText);
+        final StackPane redStack = new StackPane(redScoreRec, redMask, redText);
+        final StackPane blueStack = new StackPane(blueScoreRec, blueMask, blueText);
 
         redStack.setLayoutX(x - BUTTON_WIDTH + 20 - 15);
         redStack.setLayoutY(y + 3);
@@ -109,5 +116,20 @@ public class Header extends Group {
             blueScore++;
             blueText.setText("" + blueScore);
         }
+    }
+
+    public void showRedInd() {
+        redMask.setVisible(true);
+        blueMask.setVisible(false);
+    }
+
+    public void showBlueInd() {
+        redMask.setVisible(false);
+        blueMask.setVisible(true);
+    }
+
+    public void switchIndsOff() {
+        redMask.setVisible(false);
+        blueMask.setVisible(false);
     }
 }

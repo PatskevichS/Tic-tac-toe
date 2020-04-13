@@ -2,11 +2,9 @@ package gmail.luronbel.tictactoe.component;
 
 import static gmail.luronbel.tictactoe.component.ViewManager.VIEW_MANAGER_BEAN;
 import static gmail.luronbel.tictactoe.layout.Header.HEADER_BEAN;
-import static gmail.luronbel.tictactoe.layout.Indication.INDICATION_BEAN;
 import static gmail.luronbel.tictactoe.utils.Engine.ENGINE_BEAN;
 
 import gmail.luronbel.tictactoe.layout.Header;
-import gmail.luronbel.tictactoe.layout.Indication;
 import gmail.luronbel.tictactoe.player.Player;
 import gmail.luronbel.tictactoe.utils.Engine;
 import lombok.Getter;
@@ -38,10 +36,6 @@ public class Game {
     @Autowired
     @Qualifier(VIEW_MANAGER_BEAN)
     private ViewManager viewManager;
-
-    @Autowired
-    @Qualifier(INDICATION_BEAN)
-    private Indication indication;
 
     @Autowired
     @Qualifier(ENGINE_BEAN)
@@ -93,7 +87,7 @@ public class Game {
             bluePlayer.setGame(this);
             active = true;
             currentPlayer = true;
-            indication.showRedInd();
+            header.showRedInd();
             redPlayer.yourTurn();
         }
     }
@@ -130,11 +124,11 @@ public class Game {
         final int mark;
         if (currentPlayer) {
             viewManager.showCross(y, x);
-            indication.showBlueInd();
+            header.showBlueInd();
             mark = RED_PLAYER;
         } else {
             viewManager.showCircle(y, x);
-            indication.showRedInd();
+            header.showRedInd();
             mark = BLUE_PLAYER;
         }
         field[y - 1][x - 1] = mark;
@@ -150,7 +144,10 @@ public class Game {
         currentPlayer = !currentPlayer;
 
         checkResult(y - 1, x - 1);
-        checkWinner();
+
+        if (checkWinner() != NONE_PLAYER) {
+            return;
+        }
 
         if (currentPlayer) {
             redPlayer.yourTurn();
@@ -179,12 +176,14 @@ public class Game {
             } else {
                 System.out.println("Draw!");
                 resetSession();
+                return RED_PLAYER;
             }
         }
         return NONE_PLAYER;
     }
 
     public void resetSession() {
+        header.switchIndsOff();
         new Thread(() -> {
             try {
                 Thread.sleep(RESET_TIMEOUT);
@@ -192,6 +191,8 @@ public class Game {
             }
             active = true;
             refresh();
+            header.showRedInd();
+            redPlayer.yourTurn();
         }).start();
     }
 

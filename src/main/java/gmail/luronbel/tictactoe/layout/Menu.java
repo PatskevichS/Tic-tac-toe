@@ -39,13 +39,12 @@ public class Menu extends VBox {
     private final Button playerVsPlayerButton;
     private final Button exitButton;
 
-    public Menu(@Value("${app_name}") final String appName, @Value("${app_version}") final String appVersion,
-                @Value("${window_width}") final int windowWidth, @Value("${window_height}") final int windowHeight) {
+    public Menu(@Value("${window_width}") final int windowWidth, @Value("${window_height}") final int windowHeight) {
 
         final int menuWidth = BUTTON_WIDTH + (PADDING * 2);
         final double layoutX = (double) (windowWidth - menuWidth) / 2;
 
-        final int menuHeight = (BUTTON_HEIGHT * 5) + (PADDING * 2) + (SPACING * 8) + NAME_FONT_SIZE + VERSION_FONT_SIZE;
+        final int menuHeight = (BUTTON_HEIGHT * 3) + (PADDING * 2) + (SPACING * 2);
         final double layoutY = (double) (windowHeight - menuHeight) / 2;
 
         setLayoutY(layoutY);
