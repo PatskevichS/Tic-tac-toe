@@ -1,8 +1,13 @@
 package gmail.luronbel.tictactoe.utils;
 
 import static gmail.luronbel.tictactoe.component.Game.NONE_PLAYER;
+import static gmail.luronbel.tictactoe.component.ViewManager.VIEW_MANAGER_BEAN;
 
 import gmail.luronbel.tictactoe.component.Position;
+import gmail.luronbel.tictactoe.component.ViewManager;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.function.IntUnaryOperator;
@@ -13,15 +18,35 @@ import java.util.function.IntUnaryOperator;
  * @author Stas_Patskevich
  */
 @Component(Engine.ENGINE_BEAN)
+@RequiredArgsConstructor
 public class Engine {
     public static final String ENGINE_BEAN = "engine";
 
-    public int checkResult(final int[][] field, final int y, final int x) {
+    @Autowired
+    @Qualifier(VIEW_MANAGER_BEAN)
+    private ViewManager viewManager;
+
+    public int checkResult(final boolean player, final int[][] field, final int y, final int x, final boolean drawLine) {
         final int mark = field[y][x];
-        if (checkVerticalLine(field, mark, 0, x)
-                || checkHorizontalLine(field, mark, y, 0)
-                || checkRightCornerLine(field, mark, y, x)
-                || checkLeftCornerLine(field, mark, y, x)) {
+        if (checkVerticalLine(field, mark, 0, x)) {
+            if (drawLine) {
+                viewManager.showVerticalLine(player, x + 1);
+            }
+            return mark;
+        } else if (checkHorizontalLine(field, mark, y, 0)) {
+            if (drawLine) {
+                viewManager.showHorizontalLine(player, y + 1);
+            }
+            return mark;
+        } else if (checkRightCornerLine(field, mark, y, x)) {
+            if (drawLine) {
+                viewManager.showRightCornerLine(player);
+            }
+            return mark;
+        } else if (checkLeftCornerLine(field, mark, y, x)) {
+            if (drawLine) {
+                viewManager.showLeftCornerLine(player);
+            }
             return mark;
         }
         return NONE_PLAYER;
@@ -32,7 +57,7 @@ public class Engine {
             for (int x = 0; x < 3; x++) {
                 if (field[y][x] == NONE_PLAYER) {
                     field[y][x] = mark;
-                    final int result = checkResult(field, y, x);
+                    final int result = checkResult(false, field, y, x, false);
                     field[y][x] = NONE_PLAYER;
                     if (result != NONE_PLAYER) {
                         return new Position(y + 1, x + 1);

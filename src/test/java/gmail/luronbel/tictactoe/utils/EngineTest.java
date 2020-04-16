@@ -21,15 +21,15 @@ public class EngineTest {
                 {0, 0, 0},
                 {0, 0, 0}};
 
-        final int result_1 = engine.checkResult(field, 0, 2);
+        final int result_1 = engine.checkResult(false, field, 0, 2, true);
         assertEquals(0, result_1);
 
         field[1][1] = 1;
-        final int result_2 = engine.checkResult(field, 1, 1);
+        final int result_2 = engine.checkResult(false, field, 1, 1, true);
         assertEquals(0, result_2);
 
         field[2][0] = 1;
-        final int result_3 = engine.checkResult(field, 2, 0);
+        final int result_3 = engine.checkResult(false, field, 2, 0, true);
         assertEquals(1, result_3);
 
     }

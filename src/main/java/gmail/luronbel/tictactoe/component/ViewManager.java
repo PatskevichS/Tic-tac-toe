@@ -82,9 +82,84 @@ public class ViewManager {
         line = new Line();
         line.setStrokeWidth(10);
         line.setVisible(false);
+        gameElementsGroup.getChildren().add(line);
 
         crossPointer = 0;
         circlePointer = 0;
+    }
+
+    public void showVerticalLine(final boolean player, final int x) {
+        if (player) {
+            line.setStroke(Color.RED);
+        } else {
+            line.setStroke(Color.BLUE);
+        }
+        final int offset = (cellSize / 7) * 1;
+        final int _x = borderSize + margin + (x - 1) * cellSize + (x - 1) * lineWidth + cellSize / 2 - 5;
+        final int _fromY = borderSize + margin + (cellSize / 7) * 3 + headerSize - 2 * offset;
+        final int _toY = borderSize + margin + 2 * cellSize + 2 * lineWidth + (cellSize / 7) * 3 + headerSize + 3 * offset;
+        line.setStartX(_x);
+        line.setStartY(_fromY);
+        line.setEndX(_x);
+        line.setEndY(_toY);
+        line.setVisible(true);
+    }
+
+    public void showHorizontalLine(final boolean player, final int y) {
+        if (player) {
+            line.setStroke(Color.RED);
+        } else {
+            line.setStroke(Color.BLUE);
+        }
+        final int offset = (cellSize / 7) * 1;
+        final int _fromX = borderSize + margin + offset;
+        final int _y = borderSize + margin + (y - 1) * cellSize + (y - 1) * lineWidth + (cellSize / 7) * 3 + headerSize + 5;
+        final int _toX = borderSize + margin + 2 * cellSize + 2 * lineWidth + cellSize - 2 * margin - offset;
+        line.setStartX(_fromX);
+        line.setStartY(_y);
+        line.setEndX(_toX);
+        line.setEndY(_y);
+        line.setVisible(true);
+    }
+
+    public void showRightCornerLine(final boolean player) {
+        if (player) {
+            line.setStroke(Color.RED);
+        } else {
+            line.setStroke(Color.BLUE);
+        }
+        final int offset = (cellSize / 7) * 1;
+        final int _fromX = borderSize + margin + offset + 13;
+        final int _fromY = borderSize + margin + (cellSize / 7) * 3 + headerSize + 5 - offset - 8;
+        final int _toX = borderSize + margin + 2 * cellSize + 2 * lineWidth + cellSize - 2 * margin - offset - 13;
+        final int _toY = borderSize + margin + 2 * cellSize + 2 * lineWidth + (cellSize / 7) * 3 + headerSize + 5 + offset + 8;
+        line.setStartX(_fromX);
+        line.setStartY(_fromY);
+        line.setEndX(_toX);
+        line.setEndY(_toY);
+        line.setVisible(true);
+    }
+
+    public void showLeftCornerLine(final boolean player) {
+        if (player) {
+            line.setStroke(Color.RED);
+        } else {
+            line.setStroke(Color.BLUE);
+        }
+        final int offset = (cellSize / 7) * 1;
+        final int _fromX = borderSize + margin + 2 * cellSize + 2 * lineWidth + cellSize - 2 * margin - offset - 13;
+        final int _fromY = borderSize + margin + (cellSize / 7) * 3 + headerSize + 5 - offset - 8;
+        final int _toX = borderSize + margin + offset + 13;
+        final int _toY = borderSize + margin + 2 * cellSize + 2 * lineWidth + (cellSize / 7) * 3 + headerSize + 5 + offset + 8;
+        line.setStartX(_fromX);
+        line.setStartY(_fromY);
+        line.setEndX(_toX);
+        line.setEndY(_toY);
+        line.setVisible(true);
+    }
+
+    public void hideLine() {
+        line.setVisible(false);
     }
 
     public void showCross(final int y, final int x) {

@@ -103,6 +103,7 @@ public class Game {
         currentPlayer = true;
         winner = NONE_PLAYER;
         init();
+        viewManager.hideLine();
         viewManager.reset();
     }
 
@@ -157,24 +158,21 @@ public class Game {
     }
 
     private void checkResult(final int y, final int x) {
-        winner = engine.checkResult(field, y, x);
+        winner = engine.checkResult(!currentPlayer, field, y, x, true);
     }
 
     private int checkWinner() {
         if (winner != NONE_PLAYER || positions.isEmpty()) {
             active = false;
             if (winner == RED_PLAYER) {
-                System.out.println("Red player is winner!");
                 header.addScoreTo(true);
                 resetSession();
                 return RED_PLAYER;
             } else if (winner == BLUE_PLAYER) {
-                System.out.println("Blue player is winner!");
                 header.addScoreTo(false);
                 resetSession();
                 return BLUE_PLAYER;
             } else {
-                System.out.println("Draw!");
                 resetSession();
                 return RED_PLAYER;
             }
