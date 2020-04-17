@@ -3,12 +3,14 @@ package gmail.luronbel.tictactoe.configuration;
 import static gmail.luronbel.tictactoe.component.Game.GAME_BEAN;
 import static gmail.luronbel.tictactoe.layout.GameFieldLayout.GAME_FIELD_LAYOUT_BEAN;
 import static gmail.luronbel.tictactoe.layout.Menu.MENU_BEAN;
+import static gmail.luronbel.tictactoe.layout.PlayerChooser.PLAYER_CHOOSER_BEAN;
 import static gmail.luronbel.tictactoe.utils.PositionResolver.POSITION_RESOLVER_BEAN;
 import static javafx.scene.input.KeyCode.ESCAPE;
 
 import gmail.luronbel.tictactoe.component.Game;
 import gmail.luronbel.tictactoe.layout.GameFieldLayout;
 import gmail.luronbel.tictactoe.layout.Menu;
+import gmail.luronbel.tictactoe.layout.PlayerChooser;
 import gmail.luronbel.tictactoe.player.ActivePlayer;
 import gmail.luronbel.tictactoe.player.Bot;
 import gmail.luronbel.tictactoe.utils.PositionResolver;
@@ -54,6 +56,10 @@ public class Core {
     private Menu menu;
 
     @Autowired
+    @Qualifier(PLAYER_CHOOSER_BEAN)
+    private PlayerChooser playerChooser;
+
+    @Autowired
     @Qualifier(GAME_BEAN)
     private Game game;
 
@@ -85,6 +91,7 @@ public class Core {
                 if (gameFieldLayout.isModalViewShown()) {
                     gameFieldLayout.hideModalView();
                     menu.hide();
+                    playerChooser.hide();
                 } else {
                     gameFieldLayout.showModalView();
                     menu.show();
@@ -93,6 +100,9 @@ public class Core {
         });
 
         gameFieldLayout.setOnMousePressed(event -> {
+            if (gameFieldLayout.isModalViewShown()) {
+                return;
+            }
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
             processClick();
@@ -113,14 +123,33 @@ public class Core {
             primaryStage.setY(event.getScreenY() - yOffset);
         });
 
+        playerChooser.setRedPlayerButtonAction(event -> {
+            playerChooser.hide();
+            gameFieldLayout.hideModalView();
+            game.reset();
+            game.setRedPlayer(new ActivePlayer());
+            game.setBluePlayer(new Bot());
+            game.start();
+        });
+
+        playerChooser.setBluePlayerButtonAction(event -> {
+            playerChooser.hide();
+            gameFieldLayout.hideModalView();
+            game.reset();
+            game.setRedPlayer(new Bot());
+            game.setBluePlayer(new ActivePlayer());
+            game.start();
+        });
+
+        playerChooser.setBackButtonAction(event -> {
+            playerChooser.hide();
+            menu.show();
+        });
+
         menu.setPlayerVsBotButtonAction(event ->
         {
             menu.hide();
-            gameFieldLayout.hideModalView();
-            game.reset();
-            game.setBluePlayer(new Bot());
-            game.setRedPlayer(new ActivePlayer());
-            game.start();
+            playerChooser.show();
         });
         menu.setPlayerVsPlayerButtonAction(event ->
         {

@@ -31,8 +31,6 @@ public class Menu extends VBox {
     private static final int BUTTON_HEIGHT = 30;
     private static final int BUTTON_WIDTH = 160;
     private static final int FONT_SIZE = 16;
-    private static final int VERSION_FONT_SIZE = 10;
-    private static final int NAME_FONT_SIZE = 46;
     private static final String FONT_NAME = "times new roman";
 
     private final Button playerVsBotButton;

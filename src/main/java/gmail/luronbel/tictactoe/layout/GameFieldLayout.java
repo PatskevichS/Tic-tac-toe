@@ -5,6 +5,7 @@ import static gmail.luronbel.tictactoe.layout.Background.BACKGROUND_BEAN;
 import static gmail.luronbel.tictactoe.layout.GameElementsGroup.GAME_ELEMENTS_BEAN;
 import static gmail.luronbel.tictactoe.layout.Header.HEADER_BEAN;
 import static gmail.luronbel.tictactoe.layout.Menu.MENU_BEAN;
+import static gmail.luronbel.tictactoe.layout.PlayerChooser.PLAYER_CHOOSER_BEAN;
 
 import gmail.luronbel.tictactoe.component.Grid;
 import javafx.scene.effect.GaussianBlur;
@@ -30,6 +31,7 @@ public class GameFieldLayout extends Pane {
                            @Qualifier(GAME_ELEMENTS_BEAN) final GameElementsGroup gameElementsGroup,
                            @Qualifier(GRID_BEAN) final Grid grid,
                            @Qualifier(MENU_BEAN) final Menu menu,
+                           @Qualifier(PLAYER_CHOOSER_BEAN) final PlayerChooser playerChooser,
                            @Qualifier(HEADER_BEAN) final Header header,
                            @Value("${window_height}") final int windowHeight,
                            @Value("${window_width}") final int windowWidth,
@@ -47,6 +49,7 @@ public class GameFieldLayout extends Pane {
         getChildren().add(interactiveViews);
         getChildren().add(modalView);
         getChildren().add(menu);
+        getChildren().add(playerChooser);
     }
 
     public void showModalView() {
